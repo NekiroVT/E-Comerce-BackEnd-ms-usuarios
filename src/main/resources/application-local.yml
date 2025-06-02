@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1522/free  # Cambié a freepdb1
+    username: C##usuarios # Usa el usuario correspondiente para tu microservicio
+    password: usuarios123  # Cambia esto por la contraseña correcta
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  secret: "BqLz+2F5z8rJQNdV89sdT4g9vL5zB+L1"
+
+app:
+  owner:
+    token: "nosewey"  # Define aquí tu token especial para la consola
