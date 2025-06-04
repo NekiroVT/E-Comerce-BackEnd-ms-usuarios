@@ -1,21 +1,15 @@
 package com.msusuarios.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
 import java.time.LocalDate;
 
 @Data
-public class RegisterRequest {
+public class UsuarioUpdateDTO {
     private String username;
     private String email;
-    private String password;
-    private String confirmPassword;
     private String firstName;
     private String lastName;
-
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthdate;
-
     private String profilePhotoUrl;
+    private String status;
 }

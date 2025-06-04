@@ -2,8 +2,10 @@ package com.msusuarios.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -12,7 +14,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioRol {
+public class UsuarioRol implements Serializable {
 
     @Id
     @ManyToOne
@@ -23,4 +25,15 @@ public class UsuarioRol {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    public UsuarioRol(Usuario usuario, Role role) {
+        this.usuario = usuario;
+        this.role = role;
+        this.createdAt = LocalDateTime.now(); // ✅ Esto es necesario
+    }
 }
+

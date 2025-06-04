@@ -2,8 +2,10 @@ package com.msusuarios.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "role_permissions")
 @IdClass(RolePermisoId.class)
@@ -15,13 +17,20 @@ public class RolePermiso {
     @Id
     @ManyToOne
     @JoinColumn(name = "role_id")
-    @EqualsAndHashCode.Include
     private Role role;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "perm_id")
-    @EqualsAndHashCode.Include
     private Permission permission;
-}
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    public RolePermiso(Role role, Permission permission) {
+        this.role = role;
+        this.permission = permission;
+        this.createdAt = LocalDateTime.now(); // ✅ opcional pero útil
+    }
+}

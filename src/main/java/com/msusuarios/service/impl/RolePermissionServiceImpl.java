@@ -51,13 +51,19 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Override
     public List<RolePermisoDTO> listar() {
-        return repo.findAll().stream().map(rp -> {
+        return repo.findAllByOrderByCreatedAtDesc().stream().map(rp -> {
             RolePermisoDTO dto = new RolePermisoDTO();
             dto.setRoleId(rp.getRole().getId());
             dto.setPermissionId(rp.getPermission().getId());
+            dto.setRoleName(rp.getRole().getName());
+            dto.setPermissionName(rp.getPermission().getName());
+            dto.setCreatedAt(rp.getCreatedAt());
             return dto;
         }).collect(Collectors.toList());
     }
+
+
+
 
     @Override
     public List<RolePermisoDTO> listarPorRolId(UUID roleId) {

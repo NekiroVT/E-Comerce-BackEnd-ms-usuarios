@@ -1,12 +1,9 @@
 package com.msusuarios.service;
 
-import com.msusuarios.dto.LoginRequestDTO;
-import com.msusuarios.dto.RegisterRequest;
-import com.msusuarios.dto.UsuarioDTO;
+import com.msusuarios.dto.*;
 import com.msusuarios.entities.Usuario;
 import org.springframework.http.ResponseEntity;
-import com.msusuarios.dto.UsuarioResponseDTO;
-import com.msusuarios.dto.UsuarioSimpleDTO;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +20,14 @@ public interface UsuarioService {
     Usuario findByUsername(String username);
     List<UsuarioSimpleDTO> listarTodos();
     UsuarioResponseDTO obtenerPorId(UUID id);
+    List<UsuarioListadoDTO> listarUsuariosSimple();
+    void eliminarUsuarioPorId(UUID userId);
+    ResponseEntity<?> actualizarUsuario(UUID id, UsuarioUpdateDTO dto);
+    ResponseEntity<?> cambiarPassword(UUID id, CambiarPasswordDTO dto);
+
+
+
+
 
 
 

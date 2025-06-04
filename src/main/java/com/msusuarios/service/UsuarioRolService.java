@@ -1,6 +1,7 @@
 package com.msusuarios.service;
 
 import com.msusuarios.dto.UsuarioRolDTO;
+import com.msusuarios.dto.UsuarioRolListadoDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,4 +20,6 @@ public interface UsuarioRolService {
     List<UsuarioRolDTO> listarTodos();
 
     List<UsuarioRolDTO> listarPorUsuarioId(UUID usuarioId);
+    List<UsuarioRolListadoDTO> listarTodosConNombre();
+
 }

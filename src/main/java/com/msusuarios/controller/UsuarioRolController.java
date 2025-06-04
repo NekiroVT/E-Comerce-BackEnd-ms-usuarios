@@ -1,6 +1,7 @@
 package com.msusuarios.controller;
 
 import com.msusuarios.dto.UsuarioRolDTO;
+import com.msusuarios.dto.UsuarioRolListadoDTO;
 import com.msusuarios.service.UsuarioRolService;
 import com.msusuarios.util.UUIDUtil;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,20 @@ public class UsuarioRolController {
         List<UsuarioRolDTO> lista = service.listarTodos();
         return ResponseEntity.ok(lista);
     }
+
+    @GetMapping("/listado")
+    public ResponseEntity<?> listarTodosUserRolesConNombres(
+            @RequestHeader(value = "X-User-Permissions", required = false) String permisos
+    ) {
+        if (permisos == null || !permisos.contains("usuarios:userroles.get")) {
+            return ResponseEntity.status(403).body("No tienes permiso para ver los roles de usuarios");
+        }
+
+        List<UsuarioRolListadoDTO> lista = service.listarTodosConNombre();
+        return ResponseEntity.ok(lista);
+    }
+
+
 
     // 🔎 Listar roles de un usuario específico
     @GetMapping("/usuario/{userId}")

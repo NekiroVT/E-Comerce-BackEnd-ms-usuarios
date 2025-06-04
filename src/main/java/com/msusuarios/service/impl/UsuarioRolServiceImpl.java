@@ -1,6 +1,7 @@
 package com.msusuarios.service.impl;
 
 import com.msusuarios.dto.UsuarioRolDTO;
+import com.msusuarios.dto.UsuarioRolListadoDTO;
 import com.msusuarios.entities.Role;
 import com.msusuarios.entities.Usuario;
 import com.msusuarios.entities.UsuarioRol;
@@ -87,13 +88,30 @@ public class UsuarioRolServiceImpl implements UsuarioRolService {
 
     @Override
     public List<UsuarioRolDTO> listarTodos() {
-        return repo.findAll().stream().map(ur -> {
+        return repo.findAllByOrderByCreatedAtDesc().stream().map(ur -> {
             UsuarioRolDTO dto = new UsuarioRolDTO();
             dto.setUserId(ur.getUsuario().getId());
             dto.setRoleId(ur.getRole().getId());
             return dto;
         }).collect(Collectors.toList());
     }
+
+
+
+    @Override
+    public List<UsuarioRolListadoDTO> listarTodosConNombre() {
+        return repo.findAllByOrderByCreatedAtDesc().stream().map(ur -> {
+            UsuarioRolListadoDTO dto = new UsuarioRolListadoDTO();
+            dto.setUserId(ur.getUsuario().getId());
+            dto.setRoleId(ur.getRole().getId());
+            dto.setUsername(ur.getUsuario().getUsername());
+            dto.setRoleName(ur.getRole().getName());
+            dto.setCreatedAt(ur.getCreatedAt());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+
 
     @Override
     public List<UsuarioRolDTO> listarPorUsuarioId(UUID userId) {

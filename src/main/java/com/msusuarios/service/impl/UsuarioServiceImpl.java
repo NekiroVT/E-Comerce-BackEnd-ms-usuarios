@@ -188,6 +188,85 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .roles(roles)
                 .build();
     }
+    @Override
+    public List<UsuarioListadoDTO> listarUsuariosSimple() {
+        return usuarioRepository.findAll().stream()
+                .map(usuario -> new UsuarioListadoDTO(
+                        usuario.getId(),
+                        usuario.getUsername(),
+                        usuario.getEmail(),
+                        usuario.getStatus()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void eliminarUsuarioPorId(UUID userId) {
+        usuarioRolRepository.deleteByUsuario_Id(userId); // ✅ elimina relaciones primero
+        usuarioRepository.deleteById(userId);            // ✅ luego el usuario
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<?> actualizarUsuario(UUID id, UsuarioUpdateDTO dto) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+        Map<String, Object> response = new HashMap<>();
+
+        if (usuarioOpt.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "❌ Usuario no encontrado");
+            return ResponseEntity.status(404).body(response);
+        }
+
+        Usuario usuario = usuarioOpt.get();
+        usuario.setUsername(dto.getUsername());
+        usuario.setEmail(dto.getEmail());
+        usuario.setFirstName(dto.getFirstName());
+        usuario.setLastName(dto.getLastName());
+        usuario.setBirthdate(dto.getBirthdate());
+        usuario.setProfilePhotoUrl(dto.getProfilePhotoUrl());
+        usuario.setStatus(dto.getStatus());
+
+        usuarioRepository.save(usuario);
+
+        response.put("success", true);
+        response.put("message", "✅ Usuario actualizado");
+        return ResponseEntity.ok(response);
+    }
+
+
+    @Override
+    @Transactional
+    public ResponseEntity<?> cambiarPassword(UUID id, CambiarPasswordDTO dto) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+        Map<String, Object> response = new HashMap<>();
+
+        if (usuarioOpt.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "❌ Usuario no encontrado");
+            return ResponseEntity.status(404).body(response);
+        }
+
+        Usuario usuario = usuarioOpt.get();
+        String nuevaPassword = passwordEncoder.encode(dto.getNuevaPassword());
+        usuario.setPassword(nuevaPassword);
+
+        usuarioRepository.save(usuario);
+
+        response.put("success", true);
+        response.put("message", "✅ Contraseña actualizada correctamente");
+        return ResponseEntity.ok(response);
+    }
+
+
+
+
+
+
+
+
+
 
 
 }
