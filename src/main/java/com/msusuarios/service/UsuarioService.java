@@ -3,6 +3,7 @@ package com.msusuarios.service;
 import com.msusuarios.dto.*;
 import com.msusuarios.entities.Usuario;
 import org.springframework.http.ResponseEntity;
+import jakarta.servlet.http.HttpServletRequest; // importante
 
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +25,8 @@ public interface UsuarioService {
     void eliminarUsuarioPorId(UUID userId);
     ResponseEntity<?> actualizarUsuario(UUID id, UsuarioUpdateDTO dto);
     ResponseEntity<?> cambiarPassword(UUID id, CambiarPasswordDTO dto);
+
+    
 
 
 

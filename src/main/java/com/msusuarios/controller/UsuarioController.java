@@ -1,10 +1,9 @@
 package com.msusuarios.controller;
 
 import com.msusuarios.config.JwtTokenProvider;
-import com.msusuarios.dto.CambiarPasswordDTO;
-import com.msusuarios.dto.UsuarioResponseDTO;
-import com.msusuarios.dto.UsuarioSimpleDTO;
-import com.msusuarios.dto.UsuarioUpdateDTO;
+import com.msusuarios.dto.*;
+import com.msusuarios.entities.Usuario;
+import com.msusuarios.repository.UsuarioRepository;
 import com.msusuarios.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UsuarioRepository usuarioRepository;
 
     // 🔐 Listar todos los usuarios (simple, sin roles)
     @GetMapping
@@ -132,6 +132,23 @@ public class UsuarioController {
 
         return usuarioService.cambiarPassword(id, dto);
     }
+
+    // ✅ Nuevo endpoint usado por ms-productos para obtener nombre del usuario
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

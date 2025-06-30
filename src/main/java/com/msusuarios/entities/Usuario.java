@@ -44,6 +44,10 @@ public class Usuario {
     @Column(nullable = false)
     private String status = "pending";
 
+    @Column(name = "refresh_token", length = 1000)
+    private String refreshToken;
+
+
     // Relación con roles
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UsuarioRol> roles;
